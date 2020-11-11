@@ -1,0 +1,33 @@
+---
+- hosts: all
+  tasks:
+    - name: Run dist-upgrade
+      apt:
+          upgrade: dist
+          update_cache: yes
+      become: yes
+    - name: Install lamp stack
+      become: yes
+      apt: 
+        pkg:
+         - apache2
+         - mysql-server
+         - php7.4
+         - php7.4-mysql
+         - php-dev
+         - build-essential 
+         - php-pear 
+
+    - name: Start services
+      service: name={{ item }} state=started enabled=yes
+      become: yes
+      with_items:
+        - apache2
+        - mysql
+
+    - name: Install pear package xdebug
+      community.general.pear:
+        name: pecl/xdebug 
+        state: present
+      become: yes
+...
