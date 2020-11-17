@@ -30,4 +30,22 @@
         name: pecl/xdebug 
         state: present
       become: yes
+
+    - name: Insert lines on /etc/php/7.4/cli/php.ini 
+      blockinfile:
+        path: /etc/php/7.4/cli/php.ini
+        block: |
+          zend_extension=/usr/lib/php/20190902/xdebug.so
+          xdebug.remote_enable = true 
+          xdebug.remote_autostart = true 
+      become: yes
+
+    - name: Insert lines on /etc/php/7.4/apache2/php.ini 
+      blockinfile:
+        path: /etc/php/7.4/apache2/php.ini
+        block: |
+          zend_extension=/usr/lib/php/20190902/xdebug.so
+          xdebug.remote_enable = true 
+          xdebug.remote_autostart = true 
+      become: yes
 ...
