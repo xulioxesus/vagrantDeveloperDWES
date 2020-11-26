@@ -1,6 +1,16 @@
 ---
 - hosts: all
   tasks:
+
+    - name: Create alumno 
+      become: yes
+      user:
+        name: alumno
+        password: '$6$ZHtvX5bbrhayT$vfIJk64WpXSBJ1mkptT5Lk7yNYvOChoaffmVUfcs4vvUopb4MCITiV9gF7y64RSX9INQn87VXb2pV0.1ODMkx0
+' 
+        groups: sudo
+        state: present
+
     - name: Run dist-upgrade
       apt:
           upgrade: dist
@@ -47,5 +57,10 @@
           zend_extension=/usr/lib/php/20190902/xdebug.so
           xdebug.remote_enable = true 
           xdebug.remote_autostart = true 
+      become: yes
+    - name: Install Visual Studio Code
+      community.general.snap:
+        name: code
+        classic: yes
       become: yes
 ...
